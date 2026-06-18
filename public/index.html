@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Meal Planner</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <span class="logo">🥗</span>
+      <div>
+        <h1>AI Meal Planner</h1>
+        <p>Personalized 7-day nutrition powered by Claude AI</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- FORM -->
+    <form id="meal-form" novalidate>
+
+      <!-- Section 1: Basic Stats -->
+      <section class="card">
+        <h2><span class="step">1</span> Basic Stats</h2>
+        <div class="grid-2">
+          <div class="field">
+            <label for="age">Age</label>
+            <input type="number" id="age" name="age" min="10" max="100" placeholder="e.g. 30" required />
+          </div>
+          <div class="field">
+            <label for="sex">Sex</label>
+            <select id="sex" name="sex" required>
+              <option value="" disabled selected>Select…</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other / prefer not to say">Other / prefer not to say</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Height</label>
+          <div class="unit-toggle">
+            <button type="button" class="toggle-btn active" data-unit="imperial" onclick="switchHeight('imperial')">ft / in</button>
+            <button type="button" class="toggle-btn" data-unit="metric" onclick="switchHeight('metric')">cm</button>
+          </div>
+          <div id="height-imperial" class="grid-2 mt-8">
+            <input type="number" id="heightFt" name="heightFt" min="3" max="8" placeholder="Feet (e.g. 5)" />
+            <input type="number" id="heightIn" name="heightIn" min="0" max="11" placeholder="Inches (e.g. 10)" />
+          </div>
+          <div id="height-metric" class="hidden mt-8">
+            <input type="number" id="heightCm" name="heightCm" min="90" max="250" placeholder="Height in cm (e.g. 178)" style="width:100%" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Weight</label>
+          <div class="unit-toggle">
+            <button type="button" class="toggle-btn active" data-wunit="lbs" onclick="switchWeight('lbs')">lbs</button>
+            <button type="button" class="toggle-btn" data-wunit="kg" onclick="switchWeight('kg')">kg</button>
+          </div>
+          <div class="mt-8">
+            <input type="number" id="weight" name="weight" min="30" max="700" placeholder="e.g. 160" style="width:100%" required />
+            <input type="hidden" id="weightUnit" name="weightUnit" value="lbs" />
+            <input type="hidden" id="heightUnit" name="heightUnit" value="imperial" />
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 2: Dietary Restrictions -->
+      <section class="card">
+        <h2><span class="step">2</span> Dietary Restrictions</h2>
+        <p class="hint">Select all that apply.</p>
+        <div class="checkbox-grid">
+          <label class="checkbox-label"><input type="checkbox" name="dietaryRestrictions" value="Vegan" /> Vegan</label>
+          <label class="checkbox-label"><input type="checkbox" name="dietaryRestrictions" value="Vegetarian" /> Vegetarian</label>
+          <label class="checkbox-label"><input type="checkbox" name="dietaryRestrictions" value="Pescatarian" /> Pescatarian</label>
+          <label class="checkbox-label"><input type="checkbox" name="dietaryRestrictions" value="Gluten-free" /> Gluten-free</label>
+          <label class="checkbox-label"><input type="checkbox" name="dietaryRestrictions" value="Dairy-free" /> Dairy-free</label>
+          <label class="checkbox-label"><input type="checkbox" name="dietaryRestrictions" value="Nut-free" /> Nut-free</label>
+          <label class="checkbox-label"><input type="checkbox" name="dietaryRestrictions" value="Shellfish-free" /> Shellfish-free</label>
+          <label class="checkbox-label"><input type="checkbox" name="dietaryRestrictions" value="Egg-free" /> Egg-free</label>
+          <label class="checkbox-label"><input type="checkbox" name="dietaryRestrictions" value="Soy-free" /> Soy-free</label>
+          <label class="checkbox-label"><input type="checkbox" name="dietaryRestrictions" value="Halal" /> Halal</label>
+          <label class="checkbox-label"><input type="checkbox" name="dietaryRestrictions" value="Kosher" /> Kosher</label>
+          <label class="checkbox-label"><input type="checkbox" name="dietaryRestrictions" value="Low-carb / Keto" /> Low-carb / Keto</label>
+          <label class="checkbox-label"><input type="checkbox" name="dietaryRestrictions" value="Paleo" /> Paleo</label>
+          <label class="checkbox-label"><input type="checkbox" name="dietaryRestrictions" value="Low-sodium" /> Low-sodium</label>
+        </div>
+        <div class="field mt-12">
+          <label for="otherAllergies">Other allergies or restrictions</label>
+          <input type="text" id="otherAllergies" name="otherAllergies" placeholder="e.g. Tree nuts, sesame, sulfites…" />
+        </div>
+      </section>
+
+      <!-- Section 3: Fitness Goal -->
+      <section class="card">
+        <h2><span class="step">3</span> Fitness Goal</h2>
+        <div class="radio-group">
+          <label class="radio-label"><input type="radio" name="fitnessGoal" value="Weight loss" required /> <span>Weight loss</span></label>
+          <label class="radio-label"><input type="radio" name="fitnessGoal" value="Muscle gain / Bulking" /> <span>Muscle gain / Bulking</span></label>
+          <label class="radio-label"><input type="radio" name="fitnessGoal" value="Body recomposition (lose fat, gain muscle)" /> <span>Body recomposition</span></label>
+          <label class="radio-label"><input type="radio" name="fitnessGoal" value="Maintenance (sustain current weight)" /> <span>Maintenance</span></label>
+          <label class="radio-label"><input type="radio" name="fitnessGoal" value="Improve energy and overall health" /> <span>Improve energy &amp; health</span></label>
+          <label class="radio-label"><input type="radio" name="fitnessGoal" value="Athletic performance and endurance" /> <span>Athletic performance</span></label>
+        </div>
+      </section>
+
+      <!-- Section 4: Activity Level -->
+      <section class="card">
+        <h2><span class="step">4</span> Activity Level</h2>
+        <div class="radio-group">
+          <label class="radio-label"><input type="radio" name="activityLevel" value="Sedentary (little or no exercise, desk job)" required /> <span><strong>Sedentary</strong> — little or no exercise</span></label>
+          <label class="radio-label"><input type="radio" name="activityLevel" value="Lightly active (light exercise 1–3 days/week)" /> <span><strong>Lightly active</strong> — light exercise 1–3 days/week</span></label>
+          <label class="radio-label"><input type="radio" name="activityLevel" value="Moderately active (moderate exercise 3–5 days/week)" /> <span><strong>Moderately active</strong> — moderate exercise 3–5 days/week</span></label>
+          <label class="radio-label"><input type="radio" name="activityLevel" value="Very active (hard exercise 6–7 days/week)" /> <span><strong>Very active</strong> — hard exercise 6–7 days/week</span></label>
+          <label class="radio-label"><input type="radio" name="activityLevel" value="Extremely active (very hard exercise, physical job, or twice-daily training)" /> <span><strong>Extremely active</strong> — physical job or twice-daily training</span></label>
+        </div>
+      </section>
+
+      <!-- Section 5: Cuisine Preferences -->
+      <section class="card">
+        <h2><span class="step">5</span> Cuisine &amp; Preferences</h2>
+        <div class="field">
+          <label for="cuisinePreferences">Preferred cuisines or foods</label>
+          <input type="text" id="cuisinePreferences" name="cuisinePreferences" placeholder="e.g. Mediterranean, Asian, Mexican, simple meals…" />
+        </div>
+        <div class="field">
+          <label for="foodsToAvoid">Foods you dislike or want to avoid</label>
+          <input type="text" id="foodsToAvoid" name="foodsToAvoid" placeholder="e.g. Brussels sprouts, liver, spicy food…" />
+        </div>
+      </section>
+
+      <button type="submit" id="submit-btn" class="generate-btn">
+        Generate My Meal Plan
+        <span class="btn-arrow">→</span>
+      </button>
+    </form>
+
+    <!-- RESULTS -->
+    <section id="results" class="hidden">
+      <div class="results-header">
+        <h2>Your Personalized Meal Plan</h2>
+        <button id="back-btn" class="back-btn" onclick="showForm()">← Edit inputs</button>
+      </div>
+      <div id="loading" class="loading-state">
+        <div class="spinner"></div>
+        <p>Claude is crafting your personalized meal plan…<br /><small>This usually takes 20–40 seconds</small></p>
+      </div>
+      <div id="meal-plan-output" class="meal-plan-content hidden"></div>
+      <div id="error-msg" class="error-msg hidden"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Powered by <a href="https://www.anthropic.com" target="_blank" rel="noopener">Claude AI</a> &nbsp;·&nbsp; Always consult a healthcare professional for medical nutrition advice.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
