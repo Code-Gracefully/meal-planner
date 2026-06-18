@@ -52,7 +52,7 @@ document.getElementById('meal-form').addEventListener('submit', async (e) => {
     return;
   }
   if (!document.querySelector('input[name="fitnessGoal"]:checked')) {
-    alert('Please select a fitness goal.');
+    alert('Please select at least one fitness goal.');
     return;
   }
   if (!document.querySelector('input[name="activityLevel"]:checked')) {
@@ -75,7 +75,7 @@ document.getElementById('meal-form').addEventListener('submit', async (e) => {
     heightCm: formData.get('heightCm'),
     dietaryRestrictions: formData.getAll('dietaryRestrictions'),
     otherAllergies: formData.get('otherAllergies'),
-    fitnessGoal: formData.get('fitnessGoal'),
+    fitnessGoal: formData.getAll('fitnessGoal'),
     activityLevel: formData.get('activityLevel'),
     cuisinePreferences: formData.get('cuisinePreferences'),
     foodsToAvoid: formData.get('foodsToAvoid'),

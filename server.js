@@ -34,7 +34,7 @@ app.post('/api/meal-plan', async (req, res) => {
 
 **Dietary Restrictions:** ${restrictions.length > 0 ? restrictions.join(', ') : 'None'}
 
-**Fitness Goal:** ${fitnessGoal}
+**Fitness Goals:** ${(Array.isArray(fitnessGoal) ? fitnessGoal : [fitnessGoal]).join(', ')}
 
 **Activity Level:** ${activityLevel}
 

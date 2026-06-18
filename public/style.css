@@ -322,13 +322,13 @@ input::placeholder { color: var(--neutral-300); }
   margin-top: 1px;
 }
 
-/* Selected radio checkmark */
+/* Checkbox indicator on option cards */
 .option-card::after {
   content: '';
   width: 18px;
   height: 18px;
   border: 2px solid var(--neutral-300);
-  border-radius: 50%;
+  border-radius: 5px;
   margin-left: auto;
   flex-shrink: 0;
   transition: all 0.15s;
